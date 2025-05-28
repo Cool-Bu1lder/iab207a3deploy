@@ -3,57 +3,178 @@
 {% from 'bootstrap5/form.html' import render_form %}
 
 {% block content %}
+<style>
+  .container {
+    color: #e0e0e0;
+  }
 
-<div class="container">  
-    <div class="row mt-5 mb-3">  
-      <div class="col-md-12">  
-        <div class="float-left">  
-          <h1 class="mb-0">{{ destination.name }}</h1>  
-          <p>Popular Destination</p>  
-        </div>  
- 
-        <div class="float-right text-right">  
-          <p class="mb-0">1 AUD equals</p>  
-          <h2 id="exchange-rate">0.62 {{ destination.currency }}</h1>  
-        </div>  
-      </div>  
-    </div>  
- 
-    <!-- Destination --> 
-    <div class="row">  
-      <div class="col-md-12">  
-        <div class="card my-3">  
-          <div class="card-body">  
-            <div class="media">  
-              <img class="align-self-start mr-3" src="{{ destination.image }}">  
-              <div class="media-body">  
-                <small class="font-weight-bold text-muted">Stay 2 nights</small>  
-                <h5 class="mt-0">{{ destination.name }}</h5>  
-                <p>{{ destination.description }}</p>  
-                <a href="#" class="btn btn-danger">Book Now</a>  
-              </div>  
-            </div>  
-          </div>  
-        </div>  
-      </div>  
+  /* Header section */
+  .header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    margin-bottom: 1rem;
+  }
+
+  .header-row h1 {
+    color: #ffffff;
+    margin-bottom: 0;
+  }
+
+  .header-row p {
+    color: #adb5bd; /* muted light gray */
+    margin-bottom: 0;
+  }
+
+  /* Exchange rate styling */
+  #exchange-rate {
+    color: #0d6efd; /* Bootstrap primary blue */
+  }
+
+  /* Card styling */
+  .card {
+    background-color: #1e1e1e;
+    border: none;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.8);
+    margin-top: 1rem;
+  }
+
+  .card-body {
+    color: #e0e0e0;
+  }
+
+  /* Media layout */
+  .media {
+    display: flex;
+    gap: 1.5rem;
+  }
+
+  .media img {
+    max-width: 180px;
+    border-radius: 0.5rem;
+    object-fit: cover;
+  }
+
+  .media-body small {
+    color: #6c757d; /* muted */
+    font-weight: 600;
+  }
+
+  .media-body h5 {
+    margin-top: 0.3rem;
+    color: #ffffff;
+  }
+
+  .media-body p {
+    margin-top: 0.5rem;
+    color: #ced4da;
+  }
+
+  .btn-danger {
+    background-color: #dc3545;
+    border-color: #dc3545;
+  }
+
+  .btn-danger:hover,
+  .btn-danger:focus {
+    background-color: #bb2d3b;
+    border-color: #bb2d3b;
+  }
+
+  /* Comments section */
+  h2 {
+    color: #f8f9fa;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .border-bottom {
+    border-color: #343a40 !important;
+    padding-bottom: 1.5rem;
+  }
+
+  /* Comment styling */
+  .comment {
+    border-bottom: 1px solid #343a40;
+    padding: 1rem 0;
+  }
+
+  .comment b {
+    color: #ffffff;
+  }
+
+  .comment .text-muted {
+    color: #6c757d;
+  }
+
+  .comment p {
+    color: #ced4da;
+    margin-top: 0.3rem;
+  }
+
+  /* Form container styling */
+  form {
+    margin-bottom: 2rem;
+  }
+
+  /* Scrollbar for textarea in dark */
+  textarea.form-control {
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    color: #eee;
+  }
+
+  textarea.form-control:focus {
+    background-color: #3a3a3a;
+    border-color: #66afe9;
+    color: #fff;
+    box-shadow: 0 0 8px #66afe9;
+  }
+</style>
+
+<div class="container">
+  <div class="header-row">
+    <div>
+      <h1>{{ destination.name }}</h1>
+      <p>Popular Destination</p>
     </div>
-    <hr>
-    <!-- Comments -->  
-    <div class="row">  
-      <div class="col-md-12">  
-        <h2>Comments</h1>  
-      </div>  
-    </div>  
- 
-    <div class="row border-bottom"> 
-      {{ render_form(form,"/destinations/{0}/comment".format(destination.id)) }} 
-      {% for comment in destination.comments %}
-      <div class="col-md-12">  
-        <b>{{ comment.user.name }} <span class="ml-2 text-muted">{{ comment.created_at.strftime("%A %m %Y") }}</span></b>
-        <p>{{ comment.text }}</p>  
-      </div> 
-      {% endfor %} 
-    </div>  
-  </div> 
+
+    <div class="text-end">
+      <p class="mb-0">1 AUD equals</p>
+      <h2 id="exchange-rate">0.62 {{ destination.currency }}</h2>
+    </div>
+  </div>
+
+  <!-- Destination -->
+  <div class="card">
+    <div class="card-body">
+      <div class="media">
+        <img src="{{ destination.image }}" alt="{{ destination.name }}">
+        <div class="media-body">
+          <small>Stay 2 nights</small>
+          <h5>{{ destination.name }}</h5>
+          <p>{{ destination.description }}</p>
+          <a href="#" class="btn btn-danger">Book Now</a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <hr class="my-4 border-secondary">
+
+  <!-- Comments -->
+  <h2>Comments</h2>
+
+  <div class="border-bottom">
+    {{ render_form(form, "/destinations/{0}/comment".format(destination.id)) }}
+  </div>
+
+  {% for comment in destination.comments %}
+  <div class="comment">
+    <b>{{ comment.user.name }} <span class="ms-2 text-secondary">{{ comment.created_at.strftime("%A %m %Y") }}</span></b>
+    <p>{{ comment.text }}</p>
+  </div>
+  {% endfor %}
+</div>
 
 {% endblock %}

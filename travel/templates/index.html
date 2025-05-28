@@ -1,15 +1,22 @@
 {% extends 'base.html' %}
 
 {% block header %}
+      <!-- Jumbotron Flex Container -->
+      <div class="d-flex align-items-center justify-content-center bg-dark text-white py-5 mb-4">
+      <div class="text-center px-3">
+         <h2 class="display-5 fw-bold">Welcome to My Travel App</h2>
+         <p class="lead mb-0">Explore amazing destinations and exclusive deals worldwide.</p>
+      </div>
+      </div>
       <!--Jumbotron-->
       <div class="container">
          <div class="row justify-content-center mt-5 pb-4">
             <div class="col-md-8">
-               <div class="card shadow p-5 mb-5 bg-light">
+               <div class="card shadow p-5 mb-5 bg-dark text-white">
                   <h1 class="text-center mb-3">Find our best travel deals</h1>
                   <form class="form-inline d-flex flex-nowrap" action="{{url_for('main.search')}}" >
-                     <input type="text" name="search" class="form-control flex-grow-1 my-1 mr-sm-2"   id="SearchForm">
-                     <button type="submit" class="flex-shrink-1 btn btn-primary my-1">Submit</button>
+                     <input type="text" name="search" class="form-control flex-grow-1 my-1 me-2 bg-secondary text-white border-0 rounded-pill" id="SearchForm" placeholder="Search destinations...">
+                     <button type="submit" class="btn btn-primary my-1 rounded-pill px-4">Submit</button>
                   </form>
                </div>
             </div>
@@ -21,69 +28,33 @@
       <div class="container">
          <div class="row mt-5 mb-5 justify-content-center">
             <div class="col-md-10">
-               <div class="media border p-3 d-flex justify-content-start">
-                  <img class="align-self-center me-3" style="max-width:120px"
-                     src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Earth_Western_Hemisphere_transparent_background.png/600px-Earth_Western_Hemisphere_transparent_background.png"
-                     alt="Planet Earth">
-                  <div class="align-self-center media-body">
-                     <h5 class="mt-0">Find the best destinations on earth</h5>
-                     <p class="d-none d-sm-block">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus
-                        scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra
-                        turpis. Fusce condimentum nunc ac nisi vulputate fringilla.</p>
-                     <a href="#" class="btn btn-primary">Join Now</a>
-                  </div>
-               </div>
+               <div class="media border p-4 d-flex align-items-center gap-3 rounded bg-secondary bg-opacity-10">
+  <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/22/Earth_Western_Hemisphere_transparent_background.png/600px-Earth_Western_Hemisphere_transparent_background.png" alt="Planet Earth" style="max-width: 120px; height: auto;">
+  <div>
+    <h5>Find the best destinations on earth</h5>
+    <p class="d-none d-sm-block mb-3">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin.</p>
+    <a href="#" class="btn btn-primary btn-sm">Join Now</a>
+  </div>
+</div>
             </div>
          </div>
 
-         <div class="card-group">
-         {% for destination in destinations %}
-            <div class="card mx-3">
-               <img class="card-img-top"
-                  src="{{ destination.image }}" alt="France">
-               <div class="card-body">
-                  <h5 class="card-title">{{ destination.name }}</h5>
-                  <p class="card-text">{{ destination.description }}
-                  </p>
-               </div>
-               <div class="card-footer">
-                  <small class="text-muted">Last updated 3 mins ago</small>
-                  <a href = "{{url_for('destination.show', id=destination.id)}}" class="btn btn-danger"> View Details </a>
-               </div>
-            </div>
-         {% endfor %}
-         </div>
-         <!--div class="card-group">
-            <div class="card mx-3">
-               <img class="card-img-top"
-                  src="https://media-cdn.tripadvisor.com/media/photo-s/0e/9c/a0/02/eiffel-tower.jpg" alt="France">
-               <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This card has supporting text below as a natural lead-in to additional content.
-                  </p>
-               </div>
-               <div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div>
-            </div>
-            <div class="card mx-3">
-               <img class="card-img-top" src="https://media-cdn.tripadvisor.com/media/photo-s/12/44/87/23/london.jpg"
-                  alt="United Kingdom">
-               <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This card has supporting text below as a natural lead-in to additional content.
-                  </p>
-               </div>
-               <div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div>
-            </div>
-            <div class="card mx-3">
-               <img class="card-img-top" src="https://media-cdn.tripadvisor.com/media/photo-s/12/44/6e/a0/rome.jpg"
-                  alt="Italy">
-               <div class="card-body">
-                  <h5 class="card-title">Nice place</h5>
-                  <p class="card-text">This card has supporting text below as a natural lead-in to additional content.
-                  </p>
-               </div>
-               <div class="card-footer"><small class="text-muted">Last updated 3 mins ago</small></div>
-            </div>
-         </div-->
+         <div class="row row-cols-1 row-cols-md-3 g-4 mt-4">
+  {% for destination in destinations %}
+  <div class="col">
+    <div class="card h-100 bg-dark text-white shadow-sm">
+      <img class="card-img-top" src="{{ destination.image }}" alt="{{ destination.name }}">
+      <div class="card-body d-flex flex-column">
+        <h5 class="card-title">{{ destination.name }}</h5>
+        <p class="card-text flex-grow-1">{{ destination.description }}</p>
+      </div>
+      <div class="card-footer d-flex justify-content-between align-items-center bg-secondary text-white">
+        <small class="text-light">Last updated 3 mins ago</small>
+        <a href="{{ url_for('destination.show', id=destination.id) }}" class="btn btn-danger btn-sm">View Details</a>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</div>
       </div>
 {% endblock %}

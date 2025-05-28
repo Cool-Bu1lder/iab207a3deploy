@@ -3,17 +3,77 @@
 {% from 'bootstrap5/form.html' import render_form %}
 
 {% block content %}
-  <div class="container">
-    <div class="row mt-5">
-      <div class="col-md-12">
+<style>
+  /* Dark card container */
+  .form-card {
+    max-width: 700px;
+    margin: 3rem auto;
+    padding: 2.5rem 3rem;
+    background-color: #121212; /* very dark bg */
+    border-radius: 0.75rem;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.8);
+    color: #e0e0e0;
+  }
 
-        <h1>Add Travel Destination</h1>
-        <p>Enter a country that you will help clients travel to.</p>
+  /* Heading style */
+  .form-card h1 {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: #ffffff;
+  }
 
-        {{ render_form(form) }}
-        
-      </div>
-    </div>
-  </div>
+  /* Description paragraph */
+  .form-card p {
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    color: #b0b0b0;
+  }
+
+  /* Form controls */
+  .form-control, .form-select, textarea {
+    background-color: #2a2a2a;
+    border: 1px solid #444;
+    color: #eee;
+  }
+
+  .form-control:focus, .form-select:focus, textarea:focus {
+    background-color: #3a3a3a;
+    border-color: #66afe9;
+    color: #fff;
+    box-shadow: 0 0 8px #66afe9;
+  }
+
+  /* Submit button styling */
+  button[type="submit"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.65rem 1.5rem;
+    font-weight: 600;
+    font-size: 1rem;
+    border-radius: 0.375rem;
+    background-color: #0d6efd; /* Bootstrap primary */
+    border: none;
+    color: #fff;
+    transition: background-color 0.3s ease;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #084cdf;
+  }
+
+  /* Scrollbar for textarea if any */
+  textarea {
+    resize: vertical;
+  }
+</style>
+
+<div class="form-card">
+  <h1>Add Travel Destination</h1>
+  <p>Enter a country that you will help clients travel to.</p>
+
+  {{ render_form(form) }}
+</div>
 
 {% endblock %}
