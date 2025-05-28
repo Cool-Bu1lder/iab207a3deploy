@@ -35,6 +35,8 @@ def create_app():
 
     # config upload folder
     UPLOAD_FOLDER = '/static/image'
+    with app.app_context():
+        db.create_all()
     app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
     
     # add Blueprints
